@@ -1,0 +1,80 @@
+version: '3'
+services:
+  service-registry:
+    build:
+      context: ./back-end/service-registry
+    image: service-registry
+    container_name: service-registry
+    ports:
+      - "8761:8761"
+    networks:
+      - wealthvue
+  api-gateway:
+    build:
+      context: ./back-end/api-gateway
+    image: api-gateway
+    container_name: api-gateway
+    ports:
+      - "9000:9000"
+    networks:
+      - wealthvue
+  users-service:
+    build:
+      context: ./back-end/user
+    image: users-service
+    container_name: users-service
+    ports:
+      - "9003:9003"
+    networks:
+      - wealthvue
+  stock-service:
+    build:
+      context: ./back-end/stock
+    image: stock-service
+    container_name: stock-service
+    ports:
+      - "8080:8080"
+    networks:
+      - wealthvue
+  portfolio-service:
+    build:
+      context: ./back-end/portfolio
+    image: portfolio-service
+    container_name: portfolio-service
+    ports:
+      - "9001:9001"
+    networks:
+      - wealthvue
+  budget-service:
+    build:
+      context: ./back-end/budgeting
+    image: budget-service
+    container_name: budget-service
+    ports:
+      - "9002:9002"
+    networks:
+      - wealthvue
+  esg-service:
+    build:
+      context: ./back-end/esg
+    image: esg-service
+    container_name: esg-service
+    ports:
+      - "9004:9004"
+    networks:
+      - wealthvue
+
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #   image: frontend
+  #   container_name: frontend
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - wealthvue
+
+networks:
+  wealthvue:
+    external:
+      name: wealthvue
