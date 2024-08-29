@@ -1,0 +1,125 @@
+<div class='dashboard-container'>
+    <div class='dashboard-header'>
+        <div class='dashboard-header-title'>Hi, {{userDetails?.firstName}} {{userDetails?.lastName}} 👋 </div>
+        <div class='dashboard-header-caption'>Let's grow your wealth with WealthVue</div>
+    </div>
+    <div class='dashboard-body'>
+        <!-- LEFT SECTION -->
+        <div class='dashboard-body-left-section'>
+            <ng-container *ngIf="loading; else content">
+                <div class='loader'>
+                    <mat-spinner diameter="20" color="primary"></mat-spinner>
+                    <div class='loader-caption'>Setting everything up for you</div>
+                </div>
+            </ng-container>
+            <ng-template #content>
+                <div style="display: flex; gap: 30px;">
+                    <div class='dashboard-trending-container'>
+                        <div class='dashboard-body-title'>Top Trending Coins 🔥 </div>
+                        <div class='dashboard-trending-cards'>
+                            <div class='dashboard-trending-card' *ngFor="let coin of trendingData">
+                                <div class='trending-card-header'>
+                                    <div class='trending-card-header-image'>
+                                        <img [src]="coin.large" alt="{{coin.name}}" height="25"/>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column;">
+                                        <div style="font-weight: 600; color: #0658f6; font-size: 13px;">{{coin.name}}</div>
+                                        <div style="margin-top: -5px; text-transform: uppercase; font-weight: 600; color: #828282; font-size: 11px;">
+                                            {{coin.symbol}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='trending-card-body'>
+                                    <div style="display: flex; align-items: center; gap: 5px;">
+                                        <div style="font-weight: 600; color: #828282; font-size: 12px;">Market Rank</div>
+                                        <div style="font-weight: 600; color: #2c2c2c; font-size: 12px;">
+                                            {{coin.market_cap_rank}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='dashboard-top-coins-container'>
+                        <div class='dashboard-body-title'>Top Cryptocurrencies by Market Cap ⭐ </div>
+                        <mat-table [dataSource]="marketData" (matRowClick)="handleRowClick($event)">
+                            <ng-container matColumnDef="rank">
+                                <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+                                <mat-cell *matCellDef="let element">{{element.market_cap_rank}}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef>NAME</mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <div style="display: flex; align-items: center; gap: 15px;">
+                                        <img [src]="element.image" alt="{{element.name}}" height="20"/>
+                                        <div class="stock-name-container">
+                                            <div class="stock-name">{{element.name}}</div>
+                                            <div class="stock-symbol">{{element.symbol}}</div>
+                                        </div>
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="price">
+                                <mat-header-cell *matHeaderCellDef>PRICE</mat-header-cell>
+                                <mat-cell *matCellDef="let element">${{numberWithCommas(element.current_price)}}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="change24h">
+                                <mat-header-cell *matHeaderCellDef>24H%</mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <div [ngStyle]="{'color': element.price_change_percentage_24h > 0 ? '#16C784' : '#EA3943'}">
+                                        {{formatPercentage(element.price_change_percentage_24h)}}%
+                                      </div>
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="change7d">
+                                <mat-header-cell *matHeaderCellDef>7D%</mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <div [ngStyle]="{'color': element.price_change_percentage_7d_in_currency > 0 ? '#16C784' : '#EA3943'}">
+                                        {{formatPercentage(element.price_change_percentage_7d_in_currency)}}%
+                                      </div>
+                                </mat-cell>
+                            </ng-container>
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="handleRowClick(row)"></mat-row>
+                        </mat-table>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+
+        <!-- RIGHT SECTION -->
+        <div class='dashboard-body-right-section'>
+            <div class='dashboard-portfolio-container'>
+                <div class='dashboard-portfolio-header'>
+                    <div class='dashboard-body-title'>My Portfolios</div>
+                    <div class='dashboard-body-link'>
+                        <a routerLink="/portfolio">See All</a>
+                    </div>
+                </div>
+                <div class='dashboard-portfolio-cards'>
+                    <div class='dashboard-portfolio-card' *ngFor="let portfolio of portfolioData">
+                        <mat-icon>offline_bolt</mat-icon>
+                        <div style="display: flex; flex-direction: column; width: 100%;">
+                            <div class='portfolio-header'>{{portfolio.portfolioName}}</div>
+                            <div class='portfolio-body'>
+                                <div class='portfolio-body-balance'>${{portfolio.totalBalance.toFixed(2)}}</div>
+                                <div [ngClass]="{'portfolio-body-returns-gain': portfolio.totalReturns > 0, 'portfolio-body-returns-loss': portfolio.totalReturns <= 0}">
+                                    {{portfolio.totalReturns > 0 ? '+' : '-'}}${{numberWithCommas(portfolio.totalReturns)}}
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='dashboard-learn-container'>
+                <div class='dashboard-body-title'>Get Started</div>
+                <div class='dashboard-learn-body'>
+                    <div class='learn-body-content'>Embark on your wealth journey with tailored content to kickstart your success.</div>
+                    <div class='learn-body-button'>
+                        <a routerLink="/learn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

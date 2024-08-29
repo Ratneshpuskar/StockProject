@@ -1,0 +1,9 @@
+<p>market-trends works!</p>
+<div *ngIf="marketTrends">
+    <h2>Market Trends</h2>
+    <div *ngFor="let coin of marketTrends.coins">
+        <img [src]="coin.item.image" alt="{{coin.item.name}}" width="50">
+        <h3>{{coin.item.name}} ({{coin.item.symbol}})</h3>
+        <p>Price: ₹{{coin.item.current_price}}</p>
+    </div>
+</div>

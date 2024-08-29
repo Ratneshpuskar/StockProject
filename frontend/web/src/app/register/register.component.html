@@ -1,0 +1,35 @@
+<p>register works!</p>
+<!-- src/app/components/register/register.component.html -->
+<form (ngSubmit)="register()">
+    <label for="username">Username:</label>
+    <input id="username" [(ngModel)]="user.username" name="username" required />
+  
+    <label for="password">Password:</label>
+    <input id="password" [(ngModel)]="user.password" name="password" type="password" required />
+  
+    <label for="email">Email:</label>
+    <input id="email" [(ngModel)]="user.email" name="email" required />
+  
+    <label for="firstName">First Name:</label>
+    <input id="firstName" [(ngModel)]="user.firstName" name="firstName" />
+  
+    <label for="lastName">Last Name:</label>
+    <input id="lastName" [(ngModel)]="user.lastName" name="lastName" />
+    <!-- Add other fields as needed -->
+    <label for="dateOfBirth">Date of Birth:</label>
+    <input id="dateOfBirth" [(ngModel)]="user.dateOfBirth" name="dateOfBirth" />
+
+    <label for="address">Address:</label>
+    <input id="address" [(ngModel)]="user.address" name="address" />
+
+    <label for="phoneNumber">Phone Number:</label>
+    <input id="phoneNumber" [(ngModel)]="user.phoneNumber" name="phoneNumber" />
+
+    <label for="profilePictureUrl">Profile Picture URL</label>
+    <input id="profilePictureUrl" [(ngModel)]="user.profilePictureUrl" name="profilePictureUrl" />
+
+    <!-- <button type="submit">Register</button> -->
+    <!-- <button type="submit" class="btn btn-primary w-100" (click)="navigateToFeature('login')">Register</button> -->
+    <button type="submit" class="btn btn-primary w-100">Register</button>
+  </form>
+  

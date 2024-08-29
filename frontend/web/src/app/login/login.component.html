@@ -1,0 +1,12 @@
+<p>login works!</p>
+<!-- src/app/components/login/login.component.html -->
+<form (ngSubmit)="login()">
+    <label for="email">Email:</label>
+    <input id="email" [(ngModel)]="loginRequest.email" name="email" required />
+  
+    <label for="password">Password:</label>
+    <input id="password" [(ngModel)]="loginRequest.password" name="password" type="password" required />
+  
+    <button (click)="login()">Login</button>
+  </form>
+  <p>Don't have an account? <a (click)="navigateToFeature('register')">#Register here</a></p>

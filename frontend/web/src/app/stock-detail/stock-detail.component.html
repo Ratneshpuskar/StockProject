@@ -1,0 +1,24 @@
+<!-- <p>stock-detail works!</p>
+<div *ngIf="stock" class="stock-detail">
+    <img [src]="stock.image" alt="{{stock.name}}" width="100">
+    <h2>{{stock.name}} ({{stock.symbol}})</h2>
+    <p>Price: ₹{{stock.current_price}}</p>
+    <p>Market Cap: ₹{{stock.market_cap}}</p>
+    <p>ATH: ₹{{stock.ath}} ({{stock.ath_change_percentage}}%)</p>
+    <p>ATL: ₹{{stock.atl}} ({{stock.atl_change_percentage}}%)</p>
+    <p>Last Updated: {{stock.last_updated}}</p>
+</div> -->
+
+<div *ngIf="stock">
+    <img [src]="stock.image" alt="{{stock.name}}" width="100">
+    <h2>{{ stock.name }} ({{ stock.symbol }})</h2>
+    <p>Price: {{ stock.current_price | currency: 'INR' }}</p>
+    <p>Market Cap: {{ stock.market_cap | number }}</p>
+    <p>High 24h: {{ stock.high_24h | currency: 'INR' }}</p>
+    <p>Low 24h: {{ stock.low_24h | currency: 'INR' }}</p>
+    <p>Price Change 24h: {{ stock.price_change_24h | currency: 'INR' }}</p>
+    <p>Price Change Percentage 24h: {{ stock.price_change_percentage_24h | percent }}</p>
+    <!-- Add the stock chart here -->
+    <canvas id="stockChart"></canvas>
+  </div>
+  

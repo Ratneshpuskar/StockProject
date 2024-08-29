@@ -1,0 +1,28 @@
+<!-- <p>stock-list works!</p>
+<div *ngFor="let stock of stocks" class="stock-item">
+    <img [src]="stock.image" alt="{{stock.name}}" width="50">
+    <h3>{{stock.name}} ({{stock.symbol}})</h3>
+    <p>Price: ₹{{stock.current_price}}</p>
+    <p>Market Cap: ₹{{stock.market_cap}}</p>
+</div> -->
+
+<table>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Market Cap</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let stock of stocks" (click)="viewStockDetails(stock.id)">
+        <img [src]="stock.image" alt="{{stock.name}}" width="50">
+        <td>{{ stock.symbol }}</td>
+        <td>{{ stock.name }}</td>
+        <td>{{ stock.current_price | currency: 'INR' }}</td>
+        <td>{{ stock.market_cap | number }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
